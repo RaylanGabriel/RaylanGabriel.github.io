@@ -72,6 +72,9 @@
         --preview-gradient: rgba(255, 255, 255, 0.75);
       }
 
+      /* ============================================================
+         TRANSIÇÃO SUAVE AO TROCAR TEMA
+         ============================================================ */
       body,
       nav,
       .project-card,
@@ -103,6 +106,9 @@
         overflow-x: hidden;
       }
 
+      /* ============================================================
+         NAV
+         ============================================================ */
       nav {
         position: fixed;
         top: 0;
@@ -415,6 +421,9 @@
         transform: translateY(-1px);
       }
 
+      /* ============================================================
+         MARQUEE
+         ============================================================ */
       .marquee-section {
         padding: 2rem 0;
         border-top: 1px solid var(--border);
@@ -456,6 +465,9 @@
         }
       }
 
+      /* ============================================================
+         SECTIONS
+         ============================================================ */
       section {
         padding: 6rem 4rem;
       }
@@ -489,6 +501,9 @@
         line-height: 1.8;
       }
 
+      /* ============================================================
+         PROJECTS
+         ============================================================ */
       #projetos {
         background: var(--bg2);
       }
@@ -948,6 +963,9 @@
         font-weight: 500;
       }
 
+      /* ============================================================
+         FOOTER
+         ============================================================ */
       footer {
         padding: 2rem 4rem;
         text-align: center;
@@ -965,6 +983,9 @@
         color: var(--accent);
       }
 
+      /* ============================================================
+         SCROLL ANIMATIONS
+         ============================================================ */
       .fade-up {
         opacity: 0;
         transform: translateY(30px);
@@ -977,6 +998,13 @@
         opacity: 1;
         transform: translateY(0);
       }
+
+      /* ============================================================
+         RESPONSIVE — MOBILE
+         ============================================================ */
+      /* ============================================================
+         HAMBURGER MENU
+         ============================================================ */
 
       .hamburger {
         display: none;
@@ -1087,11 +1115,13 @@
         z-index: 98;
         background: rgba(0, 0, 0, 0.4);
         opacity: 0;
+        pointer-events: none;
         transition: opacity 0.3s;
       }
 
       .menu-overlay.open {
         opacity: 1;
+        pointer-events: all;
       }
 
       @media (max-width: 768px) {
@@ -1117,11 +1147,13 @@
           display: block;
         }
 
+        /* Hero / sections */
         .hero,
         section {
           padding: 5rem 1.5rem 3rem;
         }
 
+        /* CTA buttons: lado a lado, 50% cada */
         .hero-cta {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -1184,6 +1216,10 @@
     </style>
   </head>
   <body>
+    <!-- ============================================================
+         NAV
+         ============================================================ -->
+    <!-- Overlay atrás do menu mobile -->
     <div class="menu-overlay" id="menuOverlay"></div>
 
     <!-- Menu mobile dropdown -->
@@ -1250,6 +1286,7 @@
           <div class="theme-toggle-thumb"></div>
         </button>
 
+        <!-- HAMBÚRGUER (só aparece no mobile) -->
         <button class="hamburger" id="hamburger" aria-label="Abrir menu">
           <span></span>
           <span></span>
@@ -1258,6 +1295,9 @@
       </div>
     </nav>
 
+    <!-- ============================================================
+         HERO
+         ============================================================ -->
     <section class="hero">
       <div class="hero-grid"></div>
       <div class="hero-glow"></div>
@@ -1310,6 +1350,9 @@
       </div>
     </section>
 
+    <!-- ============================================================
+         MARQUEE
+         ============================================================ -->
     <div class="marquee-section">
       <div class="marquee-track">
         <span class="marquee-item">Next.js</span>
@@ -1787,7 +1830,7 @@
               <span class="skill-chip">Java</span>
               <span class="skill-chip">Node.js</span>
               <span class="skill-chip">POO</span>
-              <span class="skill-chip">SQL básico</span>
+              <span class="skill-chip">SQL</span>
             </div>
           </div>
           <div class="skill-card fade-up">
@@ -1899,6 +1942,7 @@
          JAVASCRIPT
          ============================================================ -->
     <script>
+      /* ---------- SCROLL ANIMATIONS ---------- */
       const obs = new IntersectionObserver(
         (entries) =>
           entries.forEach((e) => {
@@ -1966,7 +2010,7 @@
         localStorage.setItem(STORAGE_KEY, theme);
       }
 
-      
+      /* Aplica tema antes do primeiro render (evita flash) */
       applyTheme(getInitialTheme());
 
       /* Botão toggle */
