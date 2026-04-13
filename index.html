@@ -19,6 +19,9 @@
         box-sizing: border-box;
       }
 
+      /* ============================================================
+         DARK THEME (padrão)
+         ============================================================ */
       :root {
         --bg: #0a0a0f;
         --bg2: #111118;
@@ -33,8 +36,60 @@
         --text3: #5a5a72;
         --card: #13131c;
         --card2: #1a1a26;
+        --nav-bg: rgba(10, 10, 15, 0.85);
         --mono: "JetBrains Mono", monospace;
         --sans: "Space Grotesk", sans-serif;
+        --hero-badge-bg: rgba(79, 142, 247, 0.1);
+        --hero-badge-border: rgba(79, 142, 247, 0.25);
+        --skill-chip-bg: rgba(255, 255, 255, 0.04);
+        --contact-icon-bg: rgba(79, 142, 247, 0.1);
+        --preview-gradient: rgba(19, 19, 28, 0.85);
+      }
+
+      /* ============================================================
+         LIGHT THEME
+         ============================================================ */
+      body.light-theme {
+        --bg: #f4f4f8;
+        --bg2: #eaeaf0;
+        --bg3: #e0e0ea;
+        --border: rgba(0, 0, 0, 0.08);
+        --border2: rgba(0, 0, 0, 0.14);
+        --accent: #2563eb;
+        --accent2: #6d28d9;
+        --accent3: #0d9488;
+        --text: #0f0f1a;
+        --text2: #4a4a6a;
+        --text3: #8888aa;
+        --card: #ffffff;
+        --card2: #f0f0f8;
+        --nav-bg: rgba(244, 244, 248, 0.88);
+        --hero-badge-bg: rgba(37, 99, 235, 0.08);
+        --hero-badge-border: rgba(37, 99, 235, 0.22);
+        --skill-chip-bg: rgba(0, 0, 0, 0.04);
+        --contact-icon-bg: rgba(37, 99, 235, 0.08);
+        --preview-gradient: rgba(255, 255, 255, 0.75);
+      }
+
+      /* ============================================================
+         TRANSIÇÃO SUAVE AO TROCAR TEMA
+         ============================================================ */
+      body,
+      nav,
+      .project-card,
+      .skill-card,
+      .contact-item,
+      .card-body,
+      .browser-bar,
+      .hero-badge,
+      .tag,
+      .skill-chip,
+      footer {
+        transition:
+          background 0.35s ease,
+          background-color 0.35s ease,
+          color 0.35s ease,
+          border-color 0.35s ease;
       }
 
       html {
@@ -50,6 +105,9 @@
         overflow-x: hidden;
       }
 
+      /* ============================================================
+         NAV
+         ============================================================ */
       nav {
         position: fixed;
         top: 0;
@@ -60,7 +118,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 1.2rem 4rem;
-        background: rgba(10, 10, 15, 0.85);
+        background: var(--nav-bg);
         backdrop-filter: blur(20px);
         border-bottom: 1px solid var(--border);
       }
@@ -74,6 +132,12 @@
 
       .nav-logo span {
         color: var(--text2);
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 2.5rem;
       }
 
       nav ul {
@@ -95,6 +159,76 @@
         color: var(--text);
       }
 
+      /* ============================================================
+         THEME TOGGLE BUTTON
+         ============================================================ */
+      .theme-toggle {
+        background: var(--card);
+        border: 1px solid var(--border2);
+        border-radius: 100px;
+        width: 64px;
+        height: 32px;
+        cursor: pointer;
+        position: relative;
+        flex-shrink: 0;
+        transition:
+          background 0.35s,
+          border-color 0.35s;
+        overflow: hidden;
+      }
+
+      .theme-toggle:hover {
+        border-color: var(--accent);
+      }
+
+      /* trilho interno com os dois ícones */
+      .theme-toggle-track {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 7px;
+        pointer-events: none;
+      }
+
+      .theme-toggle-track svg {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+      }
+
+      /* ícone lua (dark) */
+      .icon-moon { color: var(--text3); transition: color 0.35s; }
+      /* ícone sol (light) */
+      .icon-sun  { color: var(--text3); transition: color 0.35s; }
+
+      /* destaca o ícone ativo */
+      body:not(.light-theme) .icon-moon { color: var(--accent); }
+      body.light-theme        .icon-sun  { color: var(--accent); }
+
+      /* bolinha deslizante */
+      .theme-toggle-thumb {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--accent);
+        transition:
+          transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+          background 0.35s;
+        pointer-events: none;
+      }
+
+      body.light-theme .theme-toggle-thumb {
+        transform: translateX(32px);
+      }
+
+      /* ============================================================
+         HERO
+         ============================================================ */
       .hero {
         min-height: 100vh;
         display: flex;
@@ -108,8 +242,8 @@
         position: absolute;
         inset: 0;
         background-image:
-          linear-gradient(rgba(79, 142, 247, 0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(79, 142, 247, 0.03) 1px, transparent 1px);
+          linear-gradient(var(--border) 1px, transparent 1px),
+          linear-gradient(90deg, var(--border) 1px, transparent 1px);
         background-size: 60px 60px;
         mask-image: radial-gradient(
           ellipse 80% 80% at 50% 50%,
@@ -159,8 +293,8 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background: rgba(79, 142, 247, 0.1);
-        border: 1px solid rgba(79, 142, 247, 0.25);
+        background: var(--hero-badge-bg);
+        border: 1px solid var(--hero-badge-border);
         border-radius: 100px;
         padding: 6px 16px;
         font-family: var(--mono);
@@ -180,15 +314,8 @@
       }
 
       @keyframes pulse {
-        0%,
-        100% {
-          opacity: 1;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 0.5;
-          transform: scale(0.8);
-        }
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50%       { opacity: 0.5; transform: scale(0.8); }
       }
 
       .hero-name {
@@ -200,11 +327,7 @@
       }
 
       .hero-name-accent {
-        background: linear-gradient(
-          135deg,
-          var(--accent) 0%,
-          var(--accent2) 100%
-        );
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -240,6 +363,7 @@
       .btn-primary {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 8px;
         background: var(--accent);
         color: #fff;
@@ -260,6 +384,7 @@
       .btn-ghost {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 8px;
         background: transparent;
         color: var(--text);
@@ -278,6 +403,9 @@
         transform: translateY(-1px);
       }
 
+      /* ============================================================
+         MARQUEE
+         ============================================================ */
       .marquee-section {
         padding: 2rem 0;
         border-top: 1px solid var(--border);
@@ -311,21 +439,16 @@
       }
 
       @keyframes marquee {
-        from {
-          transform: translateX(0);
-        }
-        to {
-          transform: translateX(-50%);
-        }
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
       }
 
-      section {
-        padding: 6rem 4rem;
-      }
-      .container {
-        max-width: 1100px;
-        margin: 0 auto;
-      }
+      /* ============================================================
+         SECTIONS
+         ============================================================ */
+      section { padding: 6rem 4rem; }
+
+      .container { max-width: 1100px; margin: 0 auto; }
 
       .section-label {
         font-family: var(--mono);
@@ -351,9 +474,10 @@
         line-height: 1.8;
       }
 
-      #projetos {
-        background: var(--bg2);
-      }
+      /* ============================================================
+         PROJECTS
+         ============================================================ */
+      #projetos { background: var(--bg2); }
 
       .projects-grid {
         display: grid;
@@ -369,13 +493,19 @@
         overflow: hidden;
         transition:
           border-color 0.3s,
-          transform 0.3s;
+          transform 0.3s,
+          background 0.35s,
+          box-shadow 0.3s;
         position: relative;
       }
 
       .project-card:hover {
         border-color: var(--border2);
         transform: translateY(-4px);
+      }
+
+      body.light-theme .project-card:hover {
+        box-shadow: 0 12px 40px rgba(0,0,0,0.10);
       }
 
       .project-card.featured {
@@ -393,43 +523,30 @@
         flex-direction: column;
       }
 
-      .project-card.featured .card-visual {
-        min-height: 300px;
-      }
+      .project-card.featured .card-visual { min-height: 300px; }
 
       .browser-bar {
-        background: #1c1c26;
+        background: var(--card2);
+        border-bottom: 1px solid var(--border);
         padding: 8px 12px;
         display: flex;
         align-items: center;
         gap: 10px;
         flex-shrink: 0;
-        border-bottom: 1px solid var(--border);
         z-index: 2;
       }
 
-      .browser-dots {
-        display: flex;
-        gap: 5px;
-      }
-      .browser-dot {
-        width: 9px;
-        height: 9px;
-        border-radius: 50%;
-      }
-      .browser-dot.r {
-        background: #ff5f57;
-      }
-      .browser-dot.y {
-        background: #febc2e;
-      }
-      .browser-dot.g {
-        background: #28c840;
-      }
+      body:not(.light-theme) .browser-bar { background: #1c1c26; }
+
+      .browser-dots { display: flex; gap: 5px; }
+      .browser-dot  { width: 9px; height: 9px; border-radius: 50%; }
+      .browser-dot.r { background: #ff5f57; }
+      .browser-dot.y { background: #febc2e; }
+      .browser-dot.g { background: #28c840; }
 
       .browser-url {
         flex: 1;
-        background: rgba(255, 255, 255, 0.06);
+        background: rgba(128, 128, 128, 0.1);
         border-radius: 5px;
         padding: 4px 10px;
         font-family: var(--mono);
@@ -441,9 +558,7 @@
         text-overflow: ellipsis;
       }
 
-      .browser-url span {
-        color: var(--accent);
-      }
+      .browser-url span { color: var(--accent); }
 
       .preview-img-wrap {
         flex: 1;
@@ -462,24 +577,19 @@
         filter: brightness(0.95);
       }
 
-      .project-card:hover .preview-img-wrap img {
-        transform: translateY(-20%);
-      }
+      body.light-theme .preview-img-wrap img { filter: brightness(1); }
+
+      .project-card:hover .preview-img-wrap img { transform: translateY(-20%); }
 
       .preview-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-          to bottom,
-          transparent 50%,
-          rgba(19, 19, 28, 0.85) 100%
-        );
+        background: linear-gradient(to bottom, transparent 50%, var(--preview-gradient) 100%);
         pointer-events: none;
+        transition: background 0.35s;
       }
 
-      .card-body {
-        padding: 1.75rem;
-      }
+      .card-body { padding: 1.75rem; }
 
       .card-tags {
         display: flex;
@@ -498,18 +608,9 @@
         letter-spacing: 0.05em;
       }
 
-      .tag.blue {
-        border-color: rgba(79, 142, 247, 0.4);
-        color: var(--accent);
-      }
-      .tag.green {
-        border-color: rgba(0, 212, 170, 0.4);
-        color: var(--accent3);
-      }
-      .tag.purple {
-        border-color: rgba(124, 92, 252, 0.4);
-        color: var(--accent2);
-      }
+      .tag.blue   { border-color: rgba(79, 142, 247, 0.4); color: var(--accent); }
+      .tag.green  { border-color: rgba(0, 212, 170, 0.4);  color: var(--accent3); }
+      .tag.purple { border-color: rgba(124, 92, 252, 0.4); color: var(--accent2); }
 
       .card-title {
         font-size: 1.3rem;
@@ -560,10 +661,11 @@
         transition: gap 0.2s;
       }
 
-      .card-link:hover {
-        gap: 10px;
-      }
+      .card-link:hover { gap: 10px; }
 
+      /* ============================================================
+         EXPERIENCE
+         ============================================================ */
       .exp-timeline {
         margin-top: 3.5rem;
         position: relative;
@@ -576,12 +678,7 @@
         top: 0;
         bottom: 0;
         width: 1px;
-        background: linear-gradient(
-          to bottom,
-          var(--accent),
-          var(--accent2),
-          transparent
-        );
+        background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
       }
 
       .exp-item {
@@ -599,14 +696,11 @@
         border-radius: 50%;
         background: var(--accent);
         border: 2px solid var(--bg);
+        transition: border-color 0.35s;
       }
 
-      .exp-dot.purple {
-        background: var(--accent2);
-      }
-      .exp-dot.teal {
-        background: var(--accent3);
-      }
+      .exp-dot.purple { background: var(--accent2); }
+      .exp-dot.teal   { background: var(--accent3); }
 
       .exp-meta {
         display: flex;
@@ -636,9 +730,7 @@
         margin-bottom: 0.75rem;
       }
 
-      .exp-list {
-        list-style: none;
-      }
+      .exp-list { list-style: none; }
 
       .exp-list li {
         font-size: 0.92rem;
@@ -658,9 +750,10 @@
         top: 6px;
       }
 
-      #habilidades {
-        background: var(--bg2);
-      }
+      /* ============================================================
+         SKILLS
+         ============================================================ */
+      #habilidades { background: var(--bg2); }
 
       .skills-grid {
         display: grid;
@@ -674,12 +767,10 @@
         border: 1px solid var(--border);
         border-radius: 12px;
         padding: 1.5rem;
-        transition: border-color 0.3s;
+        transition: border-color 0.3s, background 0.35s;
       }
 
-      .skill-card:hover {
-        border-color: var(--border2);
-      }
+      .skill-card:hover { border-color: var(--border2); }
 
       .skill-card-icon {
         font-size: 1.5rem;
@@ -705,7 +796,7 @@
       .skill-chip {
         font-size: 12px;
         font-family: var(--mono);
-        background: rgba(255, 255, 255, 0.04);
+        background: var(--skill-chip-bg);
         border: 1px solid var(--border);
         border-radius: 6px;
         padding: 5px 10px;
@@ -713,6 +804,9 @@
         letter-spacing: 0.02em;
       }
 
+      /* ============================================================
+         CONTACT
+         ============================================================ */
       .contact-section {
         text-align: center;
         background: var(--bg3);
@@ -738,7 +832,7 @@
         padding: 1rem 1.5rem;
         text-decoration: none;
         color: var(--text);
-        transition: all 0.2s;
+        transition: all 0.2s, background 0.35s, border-color 0.35s;
         min-width: 200px;
       }
 
@@ -752,10 +846,11 @@
         width: 36px;
         height: 36px;
         border-radius: 8px;
-        background: rgba(79, 142, 247, 0.1);
+        background: var(--contact-icon-bg);
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: background 0.35s;
       }
 
       .contact-item-icon svg {
@@ -764,23 +859,27 @@
         fill: var(--accent);
       }
 
-      .contact-item-text {
-        text-align: left;
-      }
+      .contact-item-text { text-align: left; }
+
       .contact-item-label {
         font-size: 11px;
         color: var(--text3);
         font-family: var(--mono);
       }
+
       .contact-item-value {
         font-size: 14px;
         font-weight: 500;
       }
 
+      /* ============================================================
+         FOOTER
+         ============================================================ */
       footer {
         padding: 2rem 4rem;
         text-align: center;
         border-top: 1px solid var(--border);
+        background: var(--bg);
       }
 
       footer p {
@@ -789,10 +888,11 @@
         color: var(--text3);
       }
 
-      footer span {
-        color: var(--accent);
-      }
+      footer span { color: var(--accent); }
 
+      /* ============================================================
+         SCROLL ANIMATIONS
+         ============================================================ */
       .fade-up {
         opacity: 0;
         transform: translateY(30px);
@@ -806,44 +906,119 @@
         transform: translateY(0);
       }
 
+      /* ============================================================
+         RESPONSIVE — MOBILE
+         ============================================================ */
       @media (max-width: 768px) {
+        /* Nav */
         nav {
           padding: 1rem 1.5rem;
+          gap: 1rem;
         }
-        nav ul {
-          gap: 1.5rem;
+
+        nav ul { gap: 1.2rem; }
+
+        .nav-right { gap: 1.2rem; }
+
+        /* Esconde links de nav em telas muito pequenas */
+        @media (max-width: 480px) {
+          nav ul { display: none; }
         }
+
+        /* Hero / sections */
         .hero,
-        section {
-          padding: 5rem 1.5rem 3rem;
+        section { padding: 5rem 1.5rem 3rem; }
+
+        /* CTA buttons: lado a lado, 50% cada */
+        .hero-cta {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.75rem;
+          width: 100%;
         }
+
+        .btn-primary,
+        .btn-ghost {
+          width: 100%;
+          padding: 0.85rem 1rem;
+          font-size: 14px;
+          justify-content: center;
+        }
+
+        /* Projects */
         .project-card.featured {
           grid-template-columns: 1fr;
         }
-        .projects-grid {
-          grid-template-columns: 1fr;
+
+        .projects-grid { grid-template-columns: 1fr; }
+
+        /* EduConnect inner grid */
+        .project-card .edu-grid {
+          grid-template-columns: 1fr !important;
         }
+
+        /* Contact */
         .contact-grid {
           flex-direction: column;
           align-items: center;
         }
-        footer {
-          padding: 1.5rem;
-        }
+
+        .contact-item { min-width: unset; width: 100%; max-width: 340px; }
+
+        /* Footer */
+        footer { padding: 1.5rem; }
+
+        /* Theme toggle — mantém visível */
+        .theme-toggle { width: 56px; height: 28px; }
+        .theme-toggle-thumb { width: 20px; height: 20px; }
+        body.light-theme .theme-toggle-thumb { transform: translateX(28px); }
       }
     </style>
   </head>
   <body>
+
+    <!-- ============================================================
+         NAV
+         ============================================================ -->
     <nav>
       <div class="nav-logo">rm<span>.dev</span></div>
-      <ul>
-        <li><a href="#projetos">Projetos</a></li>
-        <li><a href="#experiencia">Experiência</a></li>
-        <li><a href="#habilidades">Skills</a></li>
-        <li><a href="#contato">Contato</a></li>
-      </ul>
+
+      <div class="nav-right">
+        <ul>
+          <li><a href="#projetos">Projetos</a></li>
+          <li><a href="#experiencia">Experiência</a></li>
+          <li><a href="#habilidades">Skills</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+
+        <!-- BOTÃO DARK/LIGHT -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+          <div class="theme-toggle-track">
+            <!-- lua (dark) -->
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+            </svg>
+            <!-- sol (light) -->
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1"  x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22"   x2="5.64"  y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1"  y1="12" x2="3"  y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22"  y1="19.78" x2="5.64"  y2="18.36"/>
+              <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
+            </svg>
+          </div>
+          <div class="theme-toggle-thumb"></div>
+        </button>
+      </div>
     </nav>
 
+    <!-- ============================================================
+         HERO
+         ============================================================ -->
     <section class="hero">
       <div class="hero-grid"></div>
       <div class="hero-glow"></div>
@@ -855,8 +1030,7 @@
           <span class="hero-name-accent">Miranda</span>
         </h1>
         <p class="hero-role">
-          <strong>Desenvolvedor Web</strong> & Técnico em TI &mdash; Ponta
-          Grossa, PR
+          <strong>Desenvolvedor Web</strong> &amp; Técnico em TI &mdash; Ponta Grossa, PR
         </p>
         <p class="hero-desc">
           Transformo ideias em produtos digitais reais. Atuo com desenvolvimento
@@ -865,37 +1039,26 @@
         </p>
         <div class="hero-cta">
           <a href="#projetos" class="btn-primary">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <polyline points="16 18 22 12 16 6" />
-              <polyline points="8 6 2 12 8 18" />
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
             </svg>
             Ver projetos
           </a>
           <a href="#contato" class="btn-ghost">
             Entrar em contato
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
             </svg>
           </a>
         </div>
       </div>
     </section>
 
+    <!-- ============================================================
+         MARQUEE
+         ============================================================ -->
     <div class="marquee-section">
       <div class="marquee-track">
         <span class="marquee-item">Next.js</span>
@@ -931,18 +1094,20 @@
       </div>
     </div>
 
-    <!-- PROJETOS -->
+    <!-- ============================================================
+         PROJETOS
+         ============================================================ -->
     <section id="projetos">
       <div class="container">
         <div class="section-label">// projetos</div>
         <h2 class="section-title fade-up">Trabalhos realizados</h2>
         <p class="section-sub fade-up">
-          Projetos freelancer entregues para clientes reais, com deploy em
-          produção.
+          Projetos freelancer entregues para clientes reais, com deploy em produção.
         </p>
 
         <div class="projects-grid">
-          <!--Mr. Smash Street -->
+
+          <!-- Mr. Smash Street -->
           <div class="project-card featured fade-up">
             <div class="card-visual">
               <div class="browser-bar">
@@ -951,20 +1116,10 @@
                   <div class="browser-dot y"></div>
                   <div class="browser-dot g"></div>
                 </div>
-                <div class="browser-url">
-                  <span>mr-smash-street</span>.vercel.app
-                </div>
+                <div class="browser-url"><span>mr-smash-street</span>.vercel.app</div>
               </div>
               <div class="preview-img-wrap">
-                <img
-                  src="https://api.microlink.io/?url=https://mr-smash-street.vercel.app&screenshot=true&meta=false&embed=screenshot.url"
-                  alt="Mr. Smash Street preview"
-                  loading="lazy"
-                  onerror="
-                    this.parentElement.style.background = '#1A1A26';
-                    this.style.display = 'none';
-                  "
-                />
+                <img src="https://api.microlink.io/?url=https://mr-smash-street.vercel.app&screenshot=true&meta=false&embed=screenshot.url" alt="Mr. Smash Street preview" loading="lazy" onerror="this.parentElement.style.background='var(--card2)';this.style.display='none'"/>
                 <div class="preview-overlay"></div>
               </div>
             </div>
@@ -977,38 +1132,15 @@
                 <span class="tag">Tailwind CSS</span>
               </div>
               <h3 class="card-title">Mr. Smash Street</h3>
-              <p class="card-desc">
-                Sistema completo de pedidos online para hamburgueria local em
-                Ponta Grossa. Cardápio digital, acompanhamento de pedidos em
-                tempo real e interface 100% responsiva para mobile.
-              </p>
+              <p class="card-desc">Sistema completo de pedidos online para hamburgueria local em Ponta Grossa. Cardápio digital, acompanhamento de pedidos em tempo real e interface 100% responsiva para mobile.</p>
               <ul class="card-features">
-                <li>
-                  Cardápio interativo com categorias e personalização de itens
-                </li>
+                <li>Cardápio interativo com categorias e personalização de itens</li>
                 <li>Acompanhamento de status do pedido em tempo real</li>
                 <li>Interface otimizada para smartphone</li>
                 <li>Deploy em produção com domínio próprio via Vercel</li>
               </ul>
-              <a
-                href="https://mr-smash-street.vercel.app"
-                target="_blank"
-                class="card-link"
-              >
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.5"
-                >
-                  <path
-                    d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"
-                  />
-                  <polyline points="15 3 21 3 21 9" />
-                  <line x1="10" y1="14" x2="21" y2="3" />
-                </svg>
+              <a href="https://mr-smash-street.vercel.app" target="_blank" class="card-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                 mr-smash-street.vercel.app →
               </a>
             </div>
@@ -1023,20 +1155,10 @@
                   <div class="browser-dot y"></div>
                   <div class="browser-dot g"></div>
                 </div>
-                <div class="browser-url">
-                  <span>smartlucky</span>.vercel.app
-                </div>
+                <div class="browser-url"><span>smartlucky</span>.vercel.app</div>
               </div>
               <div class="preview-img-wrap">
-                <img
-                  src="https://api.microlink.io/?url=https://smartlucky.vercel.app&screenshot=true&meta=false&embed=screenshot.url"
-                  alt="SmartLucky preview"
-                  loading="lazy"
-                  onerror="
-                    this.parentElement.style.background = '#1A1A26';
-                    this.style.display = 'none';
-                  "
-                />
+                <img src="https://api.microlink.io/?url=https://smartlucky.vercel.app&screenshot=true&meta=false&embed=screenshot.url" alt="SmartLucky preview" loading="lazy" onerror="this.parentElement.style.background='var(--card2)';this.style.display='none'"/>
                 <div class="preview-overlay"></div>
               </div>
             </div>
@@ -1048,37 +1170,14 @@
                 <span class="tag">TypeScript</span>
               </div>
               <h3 class="card-title">SmartLucky</h3>
-              <p class="card-desc">
-                Plataforma de rifas online com seleção interativa de números,
-                pagamento via PIX e controle de disponibilidade em tempo real.
-                Concorre prêmio de R$ 1.000,00.
-              </p>
+              <p class="card-desc">Plataforma de rifas online com seleção interativa de números, pagamento via PIX e controle de disponibilidade em tempo real. Concorre prêmio de R$ 1.000,00.</p>
               <ul class="card-features">
                 <li>Seleção de até 10 números com estado em tempo real</li>
                 <li>Pagamento integrado via PIX</li>
-                <li>
-                  Cadastro de participantes e cálculo automático de valores
-                </li>
+                <li>Cadastro de participantes e cálculo automático de valores</li>
               </ul>
-              <a
-                href="https://smartlucky.vercel.app"
-                target="_blank"
-                class="card-link"
-              >
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.5"
-                >
-                  <path
-                    d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"
-                  />
-                  <polyline points="15 3 21 3 21 9" />
-                  <line x1="10" y1="14" x2="21" y2="3" />
-                </svg>
+              <a href="https://smartlucky.vercel.app" target="_blank" class="card-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                 smartlucky.vercel.app →
               </a>
             </div>
@@ -1096,15 +1195,7 @@
                 <div class="browser-url"><span>rifafabio</span>.vercel.app</div>
               </div>
               <div class="preview-img-wrap">
-                <img
-                  src="https://api.microlink.io/?url=https://rifafabio.vercel.app&screenshot=true&meta=false&embed=screenshot.url"
-                  alt="Rifa Solidária preview"
-                  loading="lazy"
-                  onerror="
-                    this.parentElement.style.background = '#1A1A26';
-                    this.style.display = 'none';
-                  "
-                />
+                <img src="https://api.microlink.io/?url=https://rifafabio.vercel.app&screenshot=true&meta=false&embed=screenshot.url" alt="Rifa Solidária preview" loading="lazy" onerror="this.parentElement.style.background='var(--card2)';this.style.display='none'"/>
                 <div class="preview-overlay"></div>
               </div>
             </div>
@@ -1116,35 +1207,14 @@
                 <span class="tag">TypeScript</span>
               </div>
               <h3 class="card-title">Rifa Solidária</h3>
-              <p class="card-desc">
-                Plataforma de arrecadação solidária com 500 números, controle de
-                status por cor (livre / reservado / pago) e transparência total
-                no sorteio.
-              </p>
+              <p class="card-desc">Plataforma de arrecadação solidária com 500 números, controle de status por cor (livre / reservado / pago) e transparência total no sorteio.</p>
               <ul class="card-features">
                 <li>Painel visual de 500 números com filtros de status</li>
                 <li>Compartilhamento integrado para redes sociais</li>
                 <li>Interface de causa social com comunicação empática</li>
               </ul>
-              <a
-                href="https://rifafabio.vercel.app"
-                target="_blank"
-                class="card-link"
-              >
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.5"
-                >
-                  <path
-                    d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"
-                  />
-                  <polyline points="15 3 21 3 21 9" />
-                  <line x1="10" y1="14" x2="21" y2="3" />
-                </svg>
+              <a href="https://rifafabio.vercel.app" target="_blank" class="card-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                 rifafabio.vercel.app →
               </a>
             </div>
@@ -1152,69 +1222,27 @@
 
           <!-- EduConnect -->
           <div class="project-card fade-up" style="grid-column: 1 / -1">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0">
-              <div class="card-visual" style="min-height: 220px">
+            <div class="edu-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:0;">
+              <div class="card-visual" style="min-height:220px;">
                 <div class="browser-bar">
                   <div class="browser-dots">
                     <div class="browser-dot r"></div>
                     <div class="browser-dot y"></div>
                     <div class="browser-dot g"></div>
                   </div>
-                  <div class="browser-url">
-                    <span>github.com</span>/RaylanGabriel/Educonnect
-                  </div>
+                  <div class="browser-url"><span>github.com</span>/RaylanGabriel/Educonnect</div>
                 </div>
-                <div
-                  class="preview-img-wrap"
-                  style="
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background: #0d1117;
-                    padding: 1.5rem;
-                  "
-                >
-                  <div
-                    style="
-                      width: 100%;
-                      font-family: var(--mono);
-                      font-size: 12px;
-                      line-height: 1.8;
-                    "
-                  >
-                    <div style="color: #7ee787">// EduConnect.java</div>
-                    <div>
-                      <span style="color: #ff7b72">public class</span>
-                      <span style="color: #79c0ff">EduConnect</span> {
-                    </div>
-                    <div style="padding-left: 1rem">
-                      <span style="color: #ff7b72">private</span> List&lt;<span
-                        style="color: #79c0ff"
-                        >Aluno</span
-                      >&gt; alunos;
-                    </div>
-                    <div style="padding-left: 1rem">
-                      <span style="color: #ff7b72">private</span> List&lt;<span
-                        style="color: #79c0ff"
-                        >Turma</span
-                      >&gt; turmas;
-                    </div>
+                <div class="preview-img-wrap" style="display:flex;align-items:center;justify-content:center;background:#0d1117;padding:1.5rem;">
+                  <div style="width:100%;font-family:var(--mono);font-size:12px;line-height:1.8;">
+                    <div style="color:#7ee787;">// EduConnect.java</div>
+                    <div><span style="color:#ff7b72;">public class</span> <span style="color:#79c0ff;">EduConnect</span> {</div>
+                    <div style="padding-left:1rem;"><span style="color:#ff7b72;">private</span> List&lt;<span style="color:#79c0ff;">Aluno</span>&gt; alunos;</div>
+                    <div style="padding-left:1rem;"><span style="color:#ff7b72;">private</span> List&lt;<span style="color:#79c0ff;">Turma</span>&gt; turmas;</div>
                     <div>&nbsp;</div>
-                    <div style="padding-left: 1rem; color: #8b949e">
-                      // Gestão acadêmica com POO
-                    </div>
-                    <div style="padding-left: 1rem">
-                      <span style="color: #ff7b72">public void</span>
-                      <span style="color: #d2a8ff">matricular</span>(<span
-                        style="color: #79c0ff"
-                        >Aluno</span
-                      >
-                      a) {
-                    </div>
-                    <div style="padding-left: 2rem">
-                      alunos.<span style="color: #d2a8ff">add</span>(a);
-                    </div>
-                    <div style="padding-left: 1rem">}</div>
+                    <div style="padding-left:1rem;color:#8b949e;">// Gestão acadêmica com POO</div>
+                    <div style="padding-left:1rem;"><span style="color:#ff7b72;">public void</span> <span style="color:#d2a8ff;">matricular</span>(<span style="color:#79c0ff;">Aluno</span> a) {</div>
+                    <div style="padding-left:2rem;">alunos.<span style="color:#d2a8ff;">add</span>(a);</div>
+                    <div style="padding-left:1rem;">}</div>
                     <div>}</div>
                   </div>
                 </div>
@@ -1226,55 +1254,32 @@
                   <span class="tag">Desktop App</span>
                 </div>
                 <h3 class="card-title">EduConnect</h3>
-                <p class="card-desc">
-                  Aplicação desktop de gestão educacional desenvolvida em Java
-                  puro, aplicando os pilares da Programação Orientada a Objetos
-                  para gerenciar entidades acadêmicas.
-                </p>
+                <p class="card-desc">Aplicação desktop de gestão educacional desenvolvida em Java puro, aplicando os pilares da Programação Orientada a Objetos para gerenciar entidades acadêmicas.</p>
                 <ul class="card-features">
                   <li>Gerenciamento de alunos, turmas e disciplinas</li>
-                  <li>
-                    Arquitetura OOP com herança, encapsulamento e polimorfismo
-                  </li>
+                  <li>Arquitetura OOP com herança, encapsulamento e polimorfismo</li>
                   <li>Interface desktop funcional em Java puro</li>
                 </ul>
-                <a
-                  href="https://github.com/RaylanGabriel/Educonnect"
-                  target="_blank"
-                  class="card-link"
-                >
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                  >
-                    <path
-                      d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"
-                    />
-                    <polyline points="15 3 21 3 21 9" />
-                    <line x1="10" y1="14" x2="21" y2="3" />
-                  </svg>
+                <a href="https://github.com/RaylanGabriel/Educonnect" target="_blank" class="card-link">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                   Ver no GitHub →
                 </a>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
 
-    <!-- EXPERIÊNCIA -->
+    <!-- ============================================================
+         EXPERIÊNCIA
+         ============================================================ -->
     <section id="experiencia">
       <div class="container">
         <div class="section-label">// experiência</div>
         <h2 class="section-title fade-up">Trajetória profissional</h2>
-        <p class="section-sub fade-up">
-          Mais de 4 anos de atuação em tecnologia e suporte, com crescimento
-          contínuo de funções.
-        </p>
+        <p class="section-sub fade-up">Mais de 4 anos de atuação em tecnologia e suporte, com crescimento contínuo de funções.</p>
 
         <div class="exp-timeline">
           <div class="exp-item fade-up">
@@ -1283,14 +1288,10 @@
               <span class="exp-company">CALL ECG TELEMEDICINA</span>
               <span class="exp-period">Abr 2023 – Atual</span>
             </div>
-            <div class="exp-role">Técnico Externo & Suporte em Informática</div>
+            <div class="exp-role">Técnico Externo &amp; Suporte em Informática</div>
             <ul class="exp-list">
-              <li>
-                Instalação e configuração de equipamentos médicos de telemetria
-              </li>
-              <li>
-                Suporte técnico em computadores, sistemas operacionais e redes
-              </li>
+              <li>Instalação e configuração de equipamentos médicos de telemetria</li>
+              <li>Suporte técnico em computadores, sistemas operacionais e redes</li>
               <li>Treinamentos presenciais para clientes e colaboradores</li>
               <li>Diagnóstico e resolução de falhas em hardware e software</li>
             </ul>
@@ -1299,9 +1300,7 @@
           <div class="exp-item fade-up">
             <div class="exp-dot purple"></div>
             <div class="exp-meta">
-              <span class="exp-company" style="color: var(--accent2)"
-                >CALL ECG TELEMEDICINA</span
-              >
+              <span class="exp-company" style="color:var(--accent2)">CALL ECG TELEMEDICINA</span>
               <span class="exp-period">Nov 2020 – Mar 2023</span>
             </div>
             <div class="exp-role">Atendente de Telemedicina</div>
@@ -1315,9 +1314,7 @@
           <div class="exp-item fade-up">
             <div class="exp-dot teal"></div>
             <div class="exp-meta">
-              <span class="exp-company" style="color: var(--accent3)"
-                >JK LOG MOVIMENTAÇÃO DE CARGA</span
-              >
+              <span class="exp-company" style="color:var(--accent3)">JK LOG MOVIMENTAÇÃO DE CARGA</span>
               <span class="exp-period">Jun 2020 – Ago 2020</span>
             </div>
             <div class="exp-role">Auxiliar Geral de Logística</div>
@@ -1331,14 +1328,14 @@
       </div>
     </section>
 
-    <!-- HABILIDADES -->
+    <!-- ============================================================
+         HABILIDADES
+         ============================================================ -->
     <section id="habilidades">
       <div class="container">
         <div class="section-label">// stack</div>
         <h2 class="section-title fade-up">Habilidades técnicas</h2>
-        <p class="section-sub fade-up">
-          Tecnologias e ferramentas com as quais trabalho.
-        </p>
+        <p class="section-sub fade-up">Tecnologias e ferramentas com as quais trabalho.</p>
 
         <div class="skills-grid">
           <div class="skill-card fade-up">
@@ -1354,10 +1351,9 @@
               <span class="skill-chip">Tailwind CSS</span>
             </div>
           </div>
-
           <div class="skill-card fade-up">
             <span class="skill-card-icon">⚙</span>
-            <div class="skill-card-title">Backend & Linguagens</div>
+            <div class="skill-card-title">Backend &amp; Linguagens</div>
             <div class="skill-list">
               <span class="skill-chip">Python</span>
               <span class="skill-chip">Java</span>
@@ -1366,10 +1362,9 @@
               <span class="skill-chip">SQL básico</span>
             </div>
           </div>
-
           <div class="skill-card fade-up">
             <span class="skill-card-icon">⬆</span>
-            <div class="skill-card-title">Deploy & Ferramentas</div>
+            <div class="skill-card-title">Deploy &amp; Ferramentas</div>
             <div class="skill-list">
               <span class="skill-chip">Git</span>
               <span class="skill-chip">GitHub</span>
@@ -1378,10 +1373,9 @@
               <span class="skill-chip">Figma</span>
             </div>
           </div>
-
           <div class="skill-card fade-up">
             <span class="skill-card-icon">🖥</span>
-            <div class="skill-card-title">Suporte & TI</div>
+            <div class="skill-card-title">Suporte &amp; TI</div>
             <div class="skill-list">
               <span class="skill-chip">HelpDesk</span>
               <span class="skill-chip">Hardware</span>
@@ -1395,69 +1389,38 @@
       </div>
     </section>
 
-    <!-- CONTATO -->
+    <!-- ============================================================
+         CONTATO
+         ============================================================ -->
     <section id="contato" class="contact-section">
       <div class="container">
         <div class="section-label">// contato</div>
         <h2 class="section-title fade-up">Vamos conversar?</h2>
-        <p
-          class="section-sub fade-up"
-          style="margin: 0 auto; text-align: center"
-        >
-          Aberto a freelas, projetos e oportunidades em TI e desenvolvimento
-          web.
+        <p class="section-sub fade-up" style="margin:0 auto;text-align:center;">
+          Aberto a freelas, projetos e oportunidades em TI e desenvolvimento web.
         </p>
-
         <div class="contact-grid">
-          href="https://wa.me/5542999692783"
           <a href="https://wa.me/5542984347835" class="contact-item fade-up">
             <div class="contact-item-icon">
-              <svg viewBox="0 0 24 24">
-                <path
-                  d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"
-                />
-              </svg>
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
             </div>
             <div class="contact-item-text">
               <div class="contact-item-label">Telefone / WhatsApp</div>
               <div class="contact-item-value">(42) 98434-7835</div>
             </div>
           </a>
-
-          <a
-            href="mailto:raylanmiranda1@gmail.com"
-            class="contact-item fade-up"
-          >
+          <a href="mailto:raylanmiranda1@gmail.com" class="contact-item fade-up">
             <div class="contact-item-icon">
-              <svg viewBox="0 0 24 24">
-                <path
-                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                />
-                <polyline
-                  points="22,6 12,13 2,6"
-                  fill="none"
-                  stroke="#4F8EF7"
-                  stroke-width="2"
-                />
-              </svg>
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6" fill="none" stroke="var(--accent)" stroke-width="2"/></svg>
             </div>
             <div class="contact-item-text">
               <div class="contact-item-label">E-mail</div>
               <div class="contact-item-value">raylanmiranda1@gmail.com</div>
             </div>
           </a>
-
-          <a
-            href="https://github.com/RaylanGabriel"
-            target="_blank"
-            class="contact-item fade-up"
-          >
+          <a href="https://github.com/RaylanGabriel" target="_blank" class="contact-item fade-up">
             <div class="contact-item-icon">
-              <svg viewBox="0 0 24 24">
-                <path
-                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"
-                />
-              </svg>
+              <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
             </div>
             <div class="contact-item-text">
               <div class="contact-item-label">GitHub</div>
@@ -1469,22 +1432,59 @@
     </section>
 
     <footer>
-      <p>
-        Desenvolvido por <span>Raylan Miranda</span> &mdash; Ponta Grossa, PR
-        &mdash; 2026
-      </p>
+      <p>Desenvolvido por <span>Raylan Miranda</span> &mdash; Ponta Grossa, PR &mdash; 2026</p>
     </footer>
 
+    <!-- ============================================================
+         JAVASCRIPT
+         ============================================================ -->
     <script>
+      /* ---------- SCROLL ANIMATIONS ---------- */
       const obs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) e.target.classList.add("visible");
-          });
-        },
-        { threshold: 0.1 },
+        entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+        { threshold: 0.1 }
       );
-      document.querySelectorAll(".fade-up").forEach((el) => obs.observe(el));
+      document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+      /* ---------- DARK / LIGHT THEME ---------- */
+      const STORAGE_KEY = 'rm-theme';
+      const btn         = document.getElementById('themeToggle');
+      const body        = document.body;
+
+      /* Determina o tema inicial:
+          Preferência do sistema (prefers-color-scheme)
+          Padrão: dark */
+      function getInitialTheme() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) return saved;
+        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      }
+
+      function applyTheme(theme) {
+        if (theme === 'light') {
+          body.classList.add('light-theme');
+        } else {
+          body.classList.remove('light-theme');
+        }
+        localStorage.setItem(STORAGE_KEY, theme);
+      }
+
+      /* Aplica tema antes do primeiro render (evita flash) */
+      applyTheme(getInitialTheme());
+
+      /* Botão toggle */
+      btn.addEventListener('click', () => {
+        const isLight = body.classList.contains('light-theme');
+        applyTheme(isLight ? 'dark' : 'light');
+      });
+
+      /* Segue mudanças do sistema enquanto o usuário não escolheu */
+      window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+        if (!localStorage.getItem(STORAGE_KEY)) {
+          applyTheme(e.matches ? 'light' : 'dark');
+        }
+      });
     </script>
+
   </body>
 </html>
