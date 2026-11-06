@@ -645,6 +645,147 @@
         transition: background 0.35s;
       }
 
+      /* Mini tela do MyDiet: o app exige login, então o screenshot automático
+         mostraria só a página de entrada. Cores fixas, como no card EduConnect. */
+      .mydiet-preview {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        background: #0a0f0d;
+        padding: 1.75rem 1rem 0;
+      }
+
+      .mydiet-phone {
+        width: 100%;
+        max-width: 270px;
+        background: #0f1714;
+        border: 6px solid #232b27;
+        border-bottom: 0;
+        border-radius: 26px 26px 0 0;
+        overflow: hidden;
+        color: #eef5f0;
+      }
+
+      .mydiet-header {
+        background: #4bc680;
+        color: #0f1714;
+        padding: 1rem 1rem 1.25rem;
+        border-radius: 0 0 20px 20px;
+      }
+
+      .mydiet-date {
+        font-size: 11px;
+        opacity: 0.8;
+        margin-bottom: 0.65rem;
+      }
+
+      .mydiet-summary {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+      }
+
+      .mydiet-ring {
+        position: relative;
+        width: 74px;
+        height: 74px;
+        flex-shrink: 0;
+      }
+
+      .mydiet-ring svg {
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+      }
+
+      .mydiet-ring-value {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.1;
+      }
+
+      .mydiet-ring-value small {
+        font-size: 9px;
+        font-weight: 400;
+        opacity: 0.7;
+      }
+
+      .mydiet-stats {
+        flex: 1;
+        min-width: 0;
+        font-size: 11px;
+      }
+
+      .mydiet-stats div {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding: 3px 0;
+      }
+
+      .mydiet-stats strong {
+        white-space: nowrap;
+      }
+
+      .mydiet-macros {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.4rem;
+        margin-top: 0.8rem;
+        font-size: 9.5px;
+      }
+
+      .mydiet-macros strong {
+        display: block;
+        font-size: 12px;
+        margin-top: 1px;
+      }
+
+      .mydiet-body {
+        padding: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+
+      .mydiet-row {
+        background: #18211d;
+        border: 1px solid #27322c;
+        border-radius: 12px;
+        padding: 0.6rem 0.7rem;
+        font-size: 11px;
+      }
+
+      .mydiet-row-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+
+      .mydiet-row-head span {
+        color: #93a39a;
+      }
+
+      .mydiet-water {
+        height: 5px;
+        margin-top: 0.45rem;
+        background: #27322c;
+        border-radius: 99px;
+        overflow: hidden;
+      }
+
+      .mydiet-water div {
+        width: 60%;
+        height: 100%;
+        background: #4bc680;
+      }
+
       .card-body {
         padding: 1.75rem;
       }
@@ -1396,8 +1537,8 @@
         <div class="section-label">// projetos</div>
         <h2 class="section-title fade-up">Trabalhos realizados</h2>
         <p class="section-sub fade-up">
-          Projetos freelancer entregues para clientes reais, com deploy em
-          produção.
+          Projetos freelancer entregues para clientes reais e projetos
+          pessoais.
         </p>
 
         <div class="projects-grid">
@@ -1605,6 +1746,140 @@
                   <line x1="10" y1="14" x2="21" y2="3" />
                 </svg>
                 rifafabio.vercel.app →
+              </a>
+            </div>
+          </div>
+
+          <!-- MyDiet -->
+          <div class="project-card featured fade-up">
+            <div class="card-visual">
+              <div class="browser-bar">
+                <div class="browser-dots">
+                  <div class="browser-dot r"></div>
+                  <div class="browser-dot y"></div>
+                  <div class="browser-dot g"></div>
+                </div>
+                <div class="browser-url">
+                  <span>github.com</span>/RaylanGabriel/mydiet
+                </div>
+              </div>
+              <div
+                class="preview-img-wrap mydiet-preview"
+                role="img"
+                aria-label="Ilustração da tela inicial do MyDiet, com dados de exemplo: calorias do dia, macronutrientes, água e refeições"
+              >
+                <div class="mydiet-phone" aria-hidden="true">
+                  <div class="mydiet-header">
+                    <div class="mydiet-date">Hoje, 6 de nov</div>
+                    <div class="mydiet-summary">
+                      <div class="mydiet-ring">
+                        <svg viewBox="0 0 100 100">
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r="45"
+                            fill="none"
+                            stroke="rgba(15, 23, 20, 0.2)"
+                            stroke-width="8"
+                          />
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r="45"
+                            fill="none"
+                            stroke="#0f1714"
+                            stroke-width="8"
+                            stroke-linecap="round"
+                            stroke-dasharray="282.7"
+                            stroke-dashoffset="92.5"
+                          />
+                        </svg>
+                        <div class="mydiet-ring-value">
+                          1480<small>kcal</small>
+                        </div>
+                      </div>
+                      <div class="mydiet-stats">
+                        <div>Meta diária <strong>2200 kcal</strong></div>
+                        <div>Restante <strong>720 kcal</strong></div>
+                      </div>
+                    </div>
+                    <div class="mydiet-macros">
+                      <div>Proteínas<strong>122g</strong></div>
+                      <div>Carboidratos<strong>140g</strong></div>
+                      <div>Gorduras<strong>48g</strong></div>
+                    </div>
+                  </div>
+                  <div class="mydiet-body">
+                    <div class="mydiet-row">
+                      <div class="mydiet-row-head">
+                        Água <span>1500 / 2500 ml</span>
+                      </div>
+                      <div class="mydiet-water"><div></div></div>
+                    </div>
+                    <div class="mydiet-row">
+                      <div class="mydiet-row-head">
+                        Almoço <span>640 kcal</span>
+                      </div>
+                    </div>
+                    <div class="mydiet-row">
+                      <div class="mydiet-row-head">
+                        Café da manhã <span>420 kcal</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-tags">
+                <span class="tag blue">Next.js</span>
+                <span class="tag blue">React</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag green">Supabase</span>
+                <span class="tag purple">IA</span>
+                <span class="tag">Capacitor</span>
+                <span class="tag">PWA</span>
+              </div>
+              <h3 class="card-title">MyDiet</h3>
+              <p class="card-desc">
+                Projeto pessoal: aplicativo mobile-first para controle de dieta
+                e treinos, com estimativa de macronutrientes por foto usando IA.
+                Roda como APK no Android e como PWA no iPhone.
+              </p>
+              <ul class="card-features">
+                <li>
+                  Registro de refeições com busca de alimentos e análise de fotos
+                  por IA
+                </li>
+                <li>Treinos com carga, tempo e cardio, recordes e resumo final</li>
+                <li>
+                  Plano nutricional calculado pelos dados corporais e metas de
+                  peso com gráfico
+                </li>
+                <li>
+                  Autenticação com Supabase e dados protegidos por RLS no Postgres
+                </li>
+              </ul>
+              <a
+                href="https://github.com/RaylanGabriel/mydiet"
+                target="_blank"
+                class="card-link"
+              >
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <path
+                    d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"
+                  />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+                Ver no GitHub →
               </a>
             </div>
           </div>
